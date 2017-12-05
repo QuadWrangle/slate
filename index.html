@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>QuadWrangle API Reference</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;java&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,9 +212,7 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="javascript">javascript</a>
+              <a href="#" data-language-name="java">java</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -225,19 +223,87 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
-          </li>
-          <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#person" class="toc-h1 toc-link" data-title="Person">Person</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
+                    <a href="#bulk-load" class="toc-h2 toc-link" data-title="Bulk Load">Bulk Load</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
+                    <a href="#insert-a-single-record" class="toc-h2 toc-link" data-title="Insert a Single Record">Insert a Single Record</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#update-a-single-record" class="toc-h2 toc-link" data-title="Update a Single Record">Update a Single Record</a>
+                  </li>
+                  <li>
+                    <a href="#get-all-changes" class="toc-h2 toc-link" data-title="Get All Changes">Get All Changes</a>
+                  </li>
+                  <li>
+                    <a href="#get-a-single-change-set" class="toc-h2 toc-link" data-title="Get a Single Change Set">Get a Single Change Set</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#events" class="toc-h1 toc-link" data-title="Events">Events</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#bulk-load-2" class="toc-h2 toc-link" data-title="Bulk Load">Bulk Load</a>
+                  </li>
+                  <li>
+                    <a href="#insert-a-single-event" class="toc-h2 toc-link" data-title="Insert a Single Event">Insert a Single Event</a>
+                  </li>
+                  <li>
+                    <a href="#update-a-single-event" class="toc-h2 toc-link" data-title="Update a Single Event">Update a Single Event</a>
+                  </li>
+                  <li>
+                    <a href="#fetch-rsvps-for-an-event" class="toc-h2 toc-link" data-title="Fetch RSVPs for an Event">Fetch RSVPs for an Event</a>
+                  </li>
+                  <li>
+                    <a href="#fetch-check-ins-for-an-event" class="toc-h2 toc-link" data-title="Fetch Check-ins for an Event">Fetch Check-ins for an Event</a>
+                  </li>
+                  <li>
+                    <a href="#fetch-ticket-sales-for-an-event" class="toc-h2 toc-link" data-title="Fetch Ticket Sales for an Event">Fetch Ticket Sales for an Event</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#news" class="toc-h1 toc-link" data-title="News">News</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#bulk-load-3" class="toc-h2 toc-link" data-title="Bulk Load">Bulk Load</a>
+                  </li>
+                  <li>
+                    <a href="#insert-a-single-news-item" class="toc-h2 toc-link" data-title="Insert a Single News Item">Insert a Single News Item</a>
+                  </li>
+                  <li>
+                    <a href="#update-a-single-news-item" class="toc-h2 toc-link" data-title="Update a Single News Item">Update a Single News Item</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#isaac" class="toc-h1 toc-link" data-title="Isaac">Isaac</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#fetch-feeds-by-user-query" class="toc-h2 toc-link" data-title="Fetch Feeds By User Query">Fetch Feeds By User Query</a>
+                  </li>
+                  <li>
+                    <a href="#fetch-feed-for-a-single-user" class="toc-h2 toc-link" data-title="Fetch Feed For a Single User">Fetch Feed For a Single User</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#models" class="toc-h1 toc-link" data-title="Models">Models</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#person-2" class="toc-h2 toc-link" data-title="Person">Person</a>
+                  </li>
+                  <li>
+                    <a href="#affiliations" class="toc-h2 toc-link" data-title="Affiliations">Affiliations</a>
+                  </li>
+                  <li>
+                    <a href="#address" class="toc-h2 toc-link" data-title="Address">Address</a>
+                  </li>
+                  <li>
+                    <a href="#spouse" class="toc-h2 toc-link" data-title="Spouse">Spouse</a>
                   </li>
               </ul>
           </li>
@@ -246,197 +312,431 @@
           </li>
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
+            <li><a href="#">TOC</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>Welcome to the QuadWrangle Data API. This API system is used to load data into the QuadWrangle platform and to pull data out. </p>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>This API documentation is a living document as we continue to build out and improve this API system we will make edits to this documentation. </p>
 
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>All calls to this API require an API Key and a Client ID which can be requested by emailing <a href="mailto:support-request@quadwrangle.com">support-request@quadwrangle.com</a> with the subject: <strong>API Key Request</strong> </p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<p>QuadWrangle provides two primary hosts, one being the production host where you will want to your live data to be written to and read production data. </p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+<p>The other is our Sandbox environment which can be used to test your code without having any effect on your production environment. </p>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
-</blockquote>
+<p>Production Host: <code>https://api.qwd.io/</code></p>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
-
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code>Authorization: meowmeowmeow</code></p>
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
+<p>Sandbox Host: <code>http://sandbox.qwd.io/</code></p>
+<h1 id='person'>Person</h1><h2 id='bulk-load'>Bulk Load</h2>
+<p>Bulk load multiple people records into the system. </p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<p><code>POST /people/load?key=&lt;API KEY&gt;&amp;appClientId=&lt;CLIENT ID&gt;</code></p>
+<h2 id='insert-a-single-record'>Insert a Single Record</h2><h2 id='update-a-single-record'>Update a Single Record</h2><h2 id='get-all-changes'>Get All Changes</h2><h2 id='get-a-single-change-set'>Get a Single Change Set</h2><h1 id='events'>Events</h1><h2 id='bulk-load-2'>Bulk Load</h2><h2 id='insert-a-single-event'>Insert a Single Event</h2><h2 id='update-a-single-event'>Update a Single Event</h2><h2 id='fetch-rsvps-for-an-event'>Fetch RSVPs for an Event</h2><h2 id='fetch-check-ins-for-an-event'>Fetch Check-ins for an Event</h2><h2 id='fetch-ticket-sales-for-an-event'>Fetch Ticket Sales for an Event</h2><h1 id='news'>News</h1><h2 id='bulk-load-3'>Bulk Load</h2><h2 id='insert-a-single-news-item'>Insert a Single News Item</h2><h2 id='update-a-single-news-item'>Update a Single News Item</h2><h1 id='isaac'>Isaac</h1>
+<p>You may use certain Isaac functions to fetch feeds for a given set of constituents. The input is essentially a search query and the result is the curated feed Isaac has created for these people. </p>
+
+<p>There is a limit built in that limits the search query to active users only (those users who have logged in to the platform)</p>
+<h2 id='fetch-feeds-by-user-query'>Fetch Feeds By User Query</h2><h2 id='fetch-feed-for-a-single-user'>Fetch Feed For a Single User</h2><h1 id='models'>Models</h1><h2 id='person-2'>Person</h2>
+<p>The Person model defines each person/constituent record. You can see a full illustration of the model to the right. This section will describe each field and it&#39;s appropriate values</p>
+
+<blockquote>
+<p>Person model as JSON:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</span><span class="s2">"recordId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"otherId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"firstName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"lastName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"maidenName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"birthday"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"classYear"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">&lt;int&gt;</span><span class="p">,</span><span class="w">
+</span><span class="s2">"nomenclature"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"email"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"altEmails"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+</span><span class="s2">"affiliations"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+</span><span class="s2">"addresses"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"label"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"street"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"address2"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"city"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"state"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"country"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"zipCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"phone"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="w">
+    </span><span class="p">},</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+</span><span class="s2">"address"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"address2"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"city"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"state"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"country"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"postalCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"phone"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"greeks"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+</span><span class="s2">"teams"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+</span><span class="s2">"clubs"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+</span><span class="s2">"academics"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"degree"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"major"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"year"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">&lt;int&gt;</span><span class="w">
+    </span><span class="p">},</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+</span><span class="s2">"notes"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"spouse"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"firstName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lastName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"affiliation"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"classYear"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">&lt;int&gt;</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"recordId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+</span><span class="s2">"employer"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"jobTitle"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"donorStatus"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+</span><span class="s2">"lastFiverYearsTotals"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="err">&lt;float&gt;</span><span class="p">,</span><span class="w"> </span><span class="err">&lt;float&gt;</span><span class="p">,</span><span class="w"> </span><span class="err">&lt;float&gt;</span><span class="p">,</span><span class="w"> </span><span class="err">&lt;float&gt;</span><span class="p">,</span><span class="w"> </span><span class="err">&lt;float&gt;</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+</span><span class="s2">"hasDirectoryAccess"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">&lt;boolean&gt;</span><span class="p">,</span><span class="w">
+</span><span class="s2">"publicProfile"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">&lt;boolean&gt;</span><span class="p">,</span><span class="w">
+</span><span class="s2">"doNotContact"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">&lt;boolean&gt;</span><span class="p">,</span><span class="w">
+</span><span class="s2">"doNotEmail"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">&lt;boolean&gt;</span><span class="p">,</span><span class="w">
+</span><span class="s2">"suppressGiving"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">&lt;boolean&gt;</span><span class="p">,</span><span class="w">
+</span><span class="s2">"isModerator"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">&lt;boolean&gt;</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <table><thead>
 <tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
+<th>Field</th>
+<th>Data Type</th>
+<th>Possible Values</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td><code>recordId</code></td>
+<td>String</td>
+<td>Your original database ID for this record (<em>REQUIRED</em>)</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td><code>otherId</code></td>
+<td>String</td>
+<td>Any additional ID you may want to specify for this record</td>
+</tr>
+<tr>
+<td><code>firstName</code></td>
+<td>String</td>
+<td>first name for this person (<em>REQUIRED</em>)</td>
+</tr>
+<tr>
+<td><code>lastName</code></td>
+<td>String</td>
+<td>last name for this person (<em>REQUIRED</em>)</td>
+</tr>
+<tr>
+<td><code>maidenName</code></td>
+<td>String</td>
+<td>maiden name for this person</td>
+</tr>
+<tr>
+<td><code>birthday</code></td>
+<td>String</td>
+<td>Valid formats: <code>m/d/yyyy</code> or <code>m-d-yyyy</code></td>
+</tr>
+<tr>
+<td><code>classYear</code></td>
+<td>Integer</td>
+<td>Valid format: <code>yyyy</code> - This is the preferred class year. Can be 0 if not an alum</td>
+</tr>
+<tr>
+<td><code>nomenclature</code></td>
+<td>String</td>
+<td>Any valid string if there are preferred class year designations, for example: &#39;96 MA, &#39;02 PhD.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>String</td>
+<td>Primary email address for this person. May be blank</td>
+</tr>
+<tr>
+<td><code>altEmails</code></td>
+<td>List</td>
+<td>A list of other email addresses</td>
+</tr>
+<tr>
+<td><code>affiliations</code></td>
+<td>List</td>
+<td>A list of valid affiliations. See Affiliations section for a full list</td>
+</tr>
+<tr>
+<td><code>addresses</code></td>
+<td>List</td>
+<td>A list of Address objects. See Address section for details</td>
+</tr>
+<tr>
+<td><code>address</code></td>
+<td>String</td>
+<td>Primary address</td>
+</tr>
+<tr>
+<td><code>address2</code></td>
+<td>String</td>
+<td>Primary address, line 2</td>
+</tr>
+<tr>
+<td><code>city</code></td>
+<td>String</td>
+<td>Primary city</td>
+</tr>
+<tr>
+<td><code>state</code></td>
+<td>String</td>
+<td>Primary state</td>
+</tr>
+<tr>
+<td><code>country</code></td>
+<td>String</td>
+<td>Primary country</td>
+</tr>
+<tr>
+<td><code>postalCode</code></td>
+<td>String</td>
+<td>Primary postal code</td>
+</tr>
+<tr>
+<td><code>phone</code></td>
+<td>String</td>
+<td>Primary phone for this person</td>
+</tr>
+<tr>
+<td><code>greeks</code></td>
+<td>List</td>
+<td>List of greek affiliations</td>
+</tr>
+<tr>
+<td><code>teams</code></td>
+<td>List</td>
+<td>List of teams/athletic orgs for this person</td>
+</tr>
+<tr>
+<td><code>clubs</code></td>
+<td>List</td>
+<td>List of clubs for this person</td>
+</tr>
+<tr>
+<td><code>academics</code></td>
+<td>List</td>
+<td>List of Academic objects - to define degrees/major and year. See section on Academics</td>
+</tr>
+<tr>
+<td><code>notes</code></td>
+<td>String</td>
+<td>Any relevant gift officer notes for this person</td>
+</tr>
+<tr>
+<td><code>spouse</code></td>
+<td>Object</td>
+<td>A spouse object for this person. See the Spouse section for details</td>
+</tr>
+<tr>
+<td><code>employer</code></td>
+<td>String</td>
+<td>Employer for this person</td>
+</tr>
+<tr>
+<td><code>jobTitle</code></td>
+<td>String</td>
+<td>Job title for this person</td>
+</tr>
+<tr>
+<td><code>donorStatus</code></td>
+<td>String</td>
+<td>A valid donor status. Can be one of: <code>CURRENT</code>, <code>NEVER</code>, <code>SYBUNT</code>, <code>LYBUNT</code></td>
+</tr>
+<tr>
+<td><code>lastFiverYearsTotals</code></td>
+<td>List<code>&lt;float&gt;</code></td>
+<td>A 5-element list where each element is a value for gifts made in the past 5 years. Element 0 is 5 years back, element 1 is 4 years back and so on with element 5 being last financial year total</td>
+</tr>
+<tr>
+<td><code>hasDirectoryAccess</code></td>
+<td>boolean</td>
+<td>Control whether or not this person has access to the Directory feature within the QuadWrangle platform</td>
+</tr>
+<tr>
+<td><code>publicProfile</code></td>
+<td>boolean</td>
+<td>Set if this person will have a public profile or not</td>
+</tr>
+<tr>
+<td><code>doNotContact</code></td>
+<td>boolean</td>
+<td>Set the &quot;do not contact&quot; flag for this person. This means we will not email, SMS, or send any communications other than system-triggered emails</td>
+</tr>
+<tr>
+<td><code>doNotEmail</code></td>
+<td>boolean</td>
+<td>Do not send this person any emails</td>
+</tr>
+<tr>
+<td><code>suppressGiving</code></td>
+<td>boolean</td>
+<td>If set to true, we will not deliver any automated CTA for giving opportunities</td>
+</tr>
+<tr>
+<td><code>isModerator</code></td>
+<td>boolean</td>
+<td>Set if this person is a moderator. Moderators have access to certain features within the platform, like moderating event photos</td>
 </tr>
 </tbody></table>
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>Only those fields marked as <em>REQUIRED</em> are required and all other fields are optional. </p>
+<h2 id='affiliations'>Affiliations</h2>
+<p>We currently have several built-in affiliations you can use to identify record types within the system. However, we also have a facility to add your own &quot;school defined affinities&quot; where you can further tag your constituent records. </p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<p>In the <code>Person</code> model you can define a list of affiliations:</p>
+<pre class="highlight json tab-json"><code><span class="s2">"affiliations"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"ALUM"</span><span class="p">,</span><span class="w"> </span><span class="s2">"FRIEND"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Your custom affinity 1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Another custom affinity"</span><span class="w"> </span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Below is a list of built-in affiliations:
+ - <code>ALUM</code></p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+<ul>
+<li><p><code>CURRENT</code> (current student)</p></li>
+<li><p><code>PARENT</code></p></li>
+<li><p><code>FACULTRY</code></p></li>
+<li><p><code>STAFF</code></p></li>
+<li><p><code>ATTENDED</code> (attended but did not graduate)</p></li>
+<li><p><code>FRIEND</code></p></li>
+<li><p><code>CURRENT_PARENT</code> (current parent of a current student)</p></li>
+<li><p><code>ALUM_ASSOC_BOARD</code>  (alumni association board)</p></li>
+<li><p><code>FORMER_TRUSTEE</code> (former trustee)</p></li>
+<li><p><code>FORMER_ALUM_ASSOC_BOARD</code> (former alumni association board)</p></li>
+<li><p><code>HONORARY_TRUSTEE</code> </p></li>
+<li><p><code>FORMER_STAFF</code></p></li>
+<li><p><code>FORMER_FACULTY</code></p></li>
+<li><p><code>CORPORATOR</code></p></li>
+<li><p><code>FORMER_CORPORATOR</code></p></li>
+<li><p><code>GRANDPARENT</code></p></li>
+<li><p><code>RETIRED_FACULTY</code></p></li>
+<li><p><code>RETIRED_STAFF</code></p></li>
+</ul>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
+<p>When using the built-in affiliations, it is critical to use the exact spelling and use all upper-case (as the above example shows).</p>
+
+<p>For any other value provided in this <code>affiliations</code> list will be treated as a &quot;school defined affinity.&quot; These attributes are usable for the purposes of audience segmentation via the List Builder tools. </p>
+<h2 id='address'>Address</h2>
+<p>Address can be used to store any contact information you may have for a constituent. You can also use this to store alternate phone numbers as well.</p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+    </span><span class="s2">"label"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"street"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"address2"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"city"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"state"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"country"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"zipCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phoneNumber"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
-<th>Parameter</th>
-<th>Description</th>
+<th>Field</th>
+<th>Data Type</th>
+<th>Possible Value</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
+<td><code>label</code></td>
+<td>String</td>
+<td>A name identifying what this address is for, for example, Business, or Alternate Phone etc. (<em>OPTIONAL</em>)</td>
+</tr>
+<tr>
+<td><code>street</code></td>
+<td>String</td>
+<td>Street address (<em>OPTIONAL</em>)</td>
+</tr>
+<tr>
+<td><code>address2</code></td>
+<td>String</td>
+<td>Address line 2 (<em>OPTIONAL</em>)</td>
+</tr>
+<tr>
+<td><code>city</code></td>
+<td>String</td>
+<td>City (<em>OPTIONAL</em>)</td>
+</tr>
+<tr>
+<td><code>state</code></td>
+<td>String</td>
+<td>State (<em>OPTIONAL</em>)</td>
+</tr>
+<tr>
+<td><code>country</code></td>
+<td>String</td>
+<td>country  (_<em>OPTIONAL</em>)</td>
+</tr>
+<tr>
+<td><code>zipCode</code></td>
+<td>String</td>
+<td>zip code  (<em>OPTIONAL</em>)</td>
+</tr>
+<tr>
+<td>`phoneNumber</td>
+<td>String</td>
+<td>phone number (<em>OPTIONAL</em>)</td>
 </tr>
 </tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
+<h2 id='spouse'>Spouse</h2>
+<p>The Spouse model used for embedding any spouse information on a Person record</p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
+    </span><span class="s2">"firstName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lastName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"affiliation"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;Affiliation&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"classYear"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">&lt;int&gt;</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"recordId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;string&gt;"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint deletes a specific kitten.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
 <table><thead>
 <tr>
-<th>Parameter</th>
-<th>Description</th>
+<th>Field</th>
+<th>Data Type</th>
+<th>Possible Value</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
+<td><code>firstName</code></td>
+<td>String</td>
+<td>First name of this spouse (<em>REQUIRED</em>)</td>
+</tr>
+<tr>
+<td><code>lastName</code></td>
+<td>String</td>
+<td>Last name of this spouse (<em>REQUIRED</em>)</td>
+</tr>
+<tr>
+<td><code>affiliation</code></td>
+<td>Affiliation</td>
+<td>Can be a single value of a built-in affiliation type <em>OPTIONAL</em></td>
+</tr>
+<tr>
+<td><code>recordId</code></td>
+<td>String</td>
+<td>If there is a database of record ID for this person, you may specify it here <em>OPTIONAL</em></td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
-
-<p>The Kittn API uses the following error codes:</p>
-
 <table><thead>
 <tr>
 <th>Error Code</th>
@@ -445,47 +745,27 @@ Remember — a happy kitten is an authenticated kitten!
 </thead><tbody>
 <tr>
 <td>400</td>
-<td>Bad Request -- Your request sucks.</td>
+<td>Bad Request</td>
 </tr>
 <tr>
 <td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
+<td>Unauthorized -- Invalid API Key and/or App Client ID</td>
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
+<td>Forbidden -- Shouldn&#39;t happen, but typically this is an API Key is wrong error</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
+<td>Not Found -- Entity was not found</td>
 </tr>
 <tr>
 <td>500</td>
-<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+<td>Internal Server Error -- An error occurred, typically a bad request or something internal happend. Most 500 errors are logged</td>
 </tr>
 <tr>
 <td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. You will know most of the time if this happens. It&#39;s pretty rare</td>
 </tr>
 </tbody></table>
 
@@ -493,9 +773,7 @@ Remember — a happy kitten is an authenticated kitten!
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="javascript">javascript</a>
+                <a href="#" data-language-name="java">java</a>
           </div>
       </div>
     </div>
