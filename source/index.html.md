@@ -39,7 +39,7 @@ Bulk load multiple people records into the system.
 
 ### HTTP Request
 
-`POST /people/load?key=<API KEY>&appClientId=<CLIENT ID>`
+`POST /people/load?key=<API KEY>&appClientId=<CLIENT ID>&ignoreChangeSets=true`
 
 In the body of your request, you will create a List of `Person` objects to be loaded:
 
@@ -50,6 +50,8 @@ In the body of your request, you will create a List of `Person` objects to be lo
 	//...
 ]
 ```
+
+You may include the `ignoreChangeSets` flag (setting it to `true`) which will instruct the system to ignore change sets and simply update the constituent records as you wish. 
 
 You may pass in the same payload and the system will determine if a new record needs to be created or simply just update said record. 
 
@@ -112,7 +114,7 @@ It is important to note that the actual saving of a bulk load request happens as
 
 ## Insert a Single Record
 
-`POST /people?key=<API KEY>&appClientId=<CLIENT ID>`
+`POST /person?key=<API KEY>&appClientId=<CLIENT ID>`
 
 Insert a single person record, the request payload does not depend on the existence of an ID, but will check the existence of this record in the database by the email so as to not insert duplicate entries. 
 
@@ -157,7 +159,7 @@ You will receive a response in JSON that looks like:
 
 ## Update a Single Record
 
-`PUT /people?key=<API KEY>&appClientId=<CLIENT ID>`
+`PUT /person?key=<API KEY>&appClientId=<CLIENT ID>&ignoreChangeSets=true`
 
 Update (Save) an individual record. Your payload must contain either a system ID (using the `id` field on the Person object) or a record ID (using the `recordId` on the Person object -- detailed below). 
 
@@ -170,6 +172,8 @@ Update (Save) an individual record. Your payload must contain either a system ID
 	// ... person fields
 }
 ```
+
+You may include the `ignoreChangeSets` flag to your URL to instruct the system to bypass checking the presence of change sets, which will allow you to just update the constituent's record as you wish. 
 
 You may use either your original `recordId` or use the `id` (system ID). in your payload so that the system an properly look up the record you are wishing to update. 
 
@@ -203,6 +207,43 @@ You will receive a response in JSON that looks like:
 | `recordId` | the original record ID for this person |
 | `person` | a copy of the original person object for this request |
 
+## Delete Person Record
+
+`DELETE /person?id=<some-id>&key=<API KEY>&appClientId=<CLIENT ID>`
+
+You may delete a person record, which will remove this record from the database and it shall also remove gift history and any references this record may have had to static User Lists.
+
+### HTTP Request
+| Parameter | Value |
+|----------|---------|
+| id | This can either be the original record ID from your system or the QuadWrangle user ID |
+
+
+### HTTP Response
+
+```json
+{
+	"id" : "<string>",
+	"userListCount" : <number>,
+	"status" : "deleted"
+}
+```
+
+| Field | Description |
+|-----|-----|
+| `id` | The unique ID for this record |
+| `userList` | If this person record was included in any static lists, this is the number of static lists we updated |
+| `status` | This will always just be marked as 'deleted' |
+
+**Error Codes**
+
+| Code | Reason |
+|--------|---------|
+| 400 | Bad Request - missing the ID parameter |
+| 404 | Not found - the constituent record was not found |
+| 403 | Forbidden - If the constituent record is active, meaning this person has logged into the QuadWrangle platform, and cannot be deleted automatically. A request will be created in our system to have this record be deleted by our system. 
+
+
 ## Get Changes
 
 Changes are returned as a List of Change Sets. A Change Set represents a change to an individual field for a particular person record. For example, if an end-user logs into your QuadMobile app, and then taps into their profile and updates their first name, a Change Set will be created for the `firstName` field. A Change Set has an "new value" and an "old value" associated with it, along with an "accepted" flag meaning this change has been accepted. 
@@ -227,6 +268,8 @@ Fetching Change Sets is based on a `GET` request, and you may provide query stri
 | `accepted` | Only return those results that have been accepted (set to `true`) or not accepted (set to `false`) |
 | `page` | Default is 0, pass this to set the cursor for the result set. You will receive a total record count in the response so you can properly set up pagination on your own side |
 
+**A note about pagination**: Because changes are grouped by an individual (an individual constituent's record may have 1 or many changes) what is being paged is the individual's group of changes. So if you have a limit of 50 set on your call, you will receive 50 constituent records back and each my have some variable number of changes. 
+
 ### HTTP Response
 
 **Error Codes**
@@ -241,13 +284,23 @@ Fetching Change Sets is based on a `GET` request, and you may provide query stri
 	"recordCount" : <int>,
 	"groups" : [
 		{
-			"userId" : "<string>",
+			"userId" : <qw system ID>,
+			"recordId" : <your original ID>,
+			"person" : <person object>,
 			"changes" : [
 				<change set object>,
 				<change set object>
 			]
 		},
-		// more change groups
+		{
+			"userId" : <qw system ID>,
+			"recordId" : <your original ID>,
+			"person" : <person object>,
+			"changes" : [
+				<change set object>,
+				<change set object>
+			]
+		}
 	]
 }
 ```
@@ -280,8 +333,8 @@ Upon a successful request, you will receive the following JSON:
 {
 	"count" : <int>,
 	"changes" : [
-		<change set object>,
-		<change set object>
+		<change set object>	,													
+		<change set object>												
 	]
 }
 ```
@@ -1047,12 +1100,18 @@ Bulk load gift history. Each gift history item is associated with a person recor
 This request expects a JSON body that takes the following form:
 
 ```json
-{
-	"history" : [
-		<gift history model>,
-		<gift history model>
-	]
-}
+[
+	{
+		// gift history model
+	},
+	{
+		// gift history model
+	},
+	{
+		// gift history model
+	},
+	//...
+]
 ```
 
 Within the gift history model you can specify an `extId` (external ID) that can be used to index each item, and a new system ID will be assigned to each as well. 
@@ -1140,6 +1199,83 @@ This request requires an ID to be passed in the URL. This ID may either be a sys
 
 Return an HTTP 200 (Ok) response
 
+## Find Gift History
+
+`POST /gifts/search?key=<API KEY>&appClientId=<CLIENT ID>`
+
+### HTTP Request
+
+This request expects a JSON body and can contain an object that includes the following fields:
+
+| Field | Data type | Description |
+|------|-----|---------|
+| `recordId` | `String` | The record ID (can be your original ID, or a QW ID |
+| `start` | `long` | timestamp in milliseconds representing the date of the gift - serves as the lower bounds of search |
+| `end` | `long` | timestamp in milliseconds representing the date of the gift - serves as an upper bounds of search |
+
+```json
+{
+	"recordId" : "<string>",
+	"start" : <long>,
+	"end" : <long>
+}
+```
+
+### HTTP Response
+
+This endpoint will return a JSON response:
+
+```json
+{
+	"count" : <int>,
+	"offset" : <int>,
+	"gifts" : [
+		<gift object>,
+		<gift object>,
+		// ...
+	]
+}
+```
+
+**Fields**
+
+| Field | Data type | Description |
+|-------|-------|--------|
+| `count` | integer | The record count for this query |
+| `offset` | integer | the cursor position for this result, helpful for paginating |
+| `gifts` | List of gift objects | A list of gift objects for this search result. See "Gift" section for full description |
+
+**Error Codes**
+
+| Code | Reason |
+|-----|------|
+| 400 | Bad request, body of the request was empty |
+| 404 | If `recordId` was provided, this constituent record was not found |
+| 500 | Error parsing JSON body, or an unknown error condition happened |
+
+
+## Gift History Detail
+
+Fetch a specific gift history entry, using the `id` column of the entry item (see "Gift" model below). 
+
+`GET /gift/{id}?key=<API KEY>&appClientId=<CLIENT ID>`
+
+### HTTP Request
+
+Pass in the ID of the entry ID in the request URL. 
+
+### HTTP Response
+
+This will return a detail Gift model (see below) as JSON 
+
+**Error Codes**
+
+| Code | Reason |
+|-----|-------|
+| 404 | Could not find the gift entry for the ID provided |
+| 500 | Unknown error |
+
+
 # QuadMail
 
 Endpoints to expose certain functions for QuadMail.
@@ -1192,6 +1328,7 @@ The Person model defines each person/constituent record. You can see a full illu
 "birthday" : "<string>",
 "classYear" : <int>,
 "nomenclature" : "<string>",
+"suggestedGift" : <float>,
 "email" : "<string>",
 "altEmails" : [
 	"<string>","<string>", ...
@@ -1199,6 +1336,12 @@ The Person model defines each person/constituent record. You can see a full illu
 "affiliations" : [
 	"<string>", "<string>", ...
 	],
+"schoolDefinedAffinities" : [
+	"<string>", "<string>", ...
+],
+"allAffinities" : [
+	"<string>", "<string>", ...
+],
 "addresses" : [
 	{
 		"label" : "<string>",
@@ -1245,7 +1388,7 @@ The Person model defines each person/constituent record. You can see a full illu
 "employer" : "<string>",
 "jobTitle" : "<string>",
 "donorStatus" : "<string>",
-"lastFiverYearsTotals" : [
+"lastFiveYearsTotals" : [
 	<float>, <float>, <float>, <float>, <float>
 	],
 "hasDirectoryAccess" : <boolean>,
@@ -1253,6 +1396,12 @@ The Person model defines each person/constituent record. You can see a full illu
 "doNotContact" : <boolean>,
 "doNotEmail" : <boolean>,
 "suppressGiving" : <boolean>,
+"highlyEngaged" : <boolean>,
+"giftHistoryTotal" : <float>,
+"lastGiftDate" : "<string>",
+"engagementScore" : <float>,
+"totalNumberOfGifts" : <int>,
+"relationshipStatus" : "<string>",
 "isModerator" : <boolean>,
 "fbPageIds" : [
 	"<string>",
@@ -1261,7 +1410,25 @@ The Person model defines each person/constituent record. You can see a full illu
 "fbAccessToken" : "<string>",
 "liAccessToken" : "<string>",
 "linkedinBio" : "<string>",
-"biography" : "<string>"
+"biography" : "<string>",
+"customFields" : {
+	"<string>" : <string| number | list | object>
+},
+"giftOfficer" : {
+	"id" : "<qw id>",
+	"firstName" : "<string>",
+	"lastName" : "<string>",
+	"email" : "<string>",
+	"phone" : "<string>",
+	"department" : "<string>",
+	"jobTitle" : "<string>",
+	"types" : ["GO"],
+	"lastLogin" : <timestamp>, // read only
+	"isActive" : <boolean> // read only
+},
+"callReports" : [
+	<call report obj>, <call report obj>...
+]
 }
 ```
 
@@ -1276,9 +1443,12 @@ The Person model defines each person/constituent record. You can see a full illu
 | `birthday`	| String	| Valid formats: `m/d/yyyy` or `m-d-yyyy` |
 | `classYear`	| Integer	| Valid format: `yyyy` - This is the preferred class year. Can be 0 if not an alum
 | `nomenclature`	| String	| Any valid string if there are preferred class year designations, for example: '96 MA, '02 PhD.	|
+| `suggestedGift` | Float | A suggested gift amount for this constituent. If you have data on optimal or suggested gift amounts for this constituent, you may set it here and when presenting this user with any Giving Pages within our platform, we will pre-fill that amount with whatever you set here |
 | `email`	| String	| Primary email address for this person. May be blank |
 | `altEmails`	| List	| A list of other email addresses	|
 | `affiliations` | List | A list of valid affiliations. See Affiliations section for a full list |
+| `schoolDefinedAffinities` | List | A list of all custom affinities this constituent is a member of. Custom affinities are created by you and are separate from the QuadWrangle built-in affiliations and allow you more control over how constituents are "tagged" and queried. If this is left empty, or not included, the system will clear out these affinities for this constituent. |
+| `allAffinities` | List | A list of all affinities for this constituent. This list combines `affiliations` and `schoolDefinedAffinities` so that you can inspect just one single field. |
 | `addresses` | List	| A list of Address objects. See Address section for details
 | `address`	| String | Primary address |
 | `address2` | String | Primary address, line 2 |
@@ -1295,21 +1465,106 @@ The Person model defines each person/constituent record. You can see a full illu
 | `spouse` | Object | A spouse object for this person. See the Spouse section for details |
 | `employer` | String | Employer for this person |
 | `jobTitle` | String | Job title for this person |
+| `gender` | String | constituent's gender, should be either: F, M or blank values are fine |
+| `hasGraduated` | Boolean | set to true or false to indicate that this user has graduated. |
+| `highlyEngaged` | Boolean | set to true if you consider this constituent "highly engaged" |
+| `associationMember` | Boolean | set to true if this constituent 
 | `donorStatus` | String | A valid donor status. Can be one of: `CURRENT`, `NEVER`, `SYBUNT`, `LYBUNT` |
-| `lastFiverYearsTotals` | List`<float>` | A 5-element list where each element is a value for gifts made in the past 5 years. Element 0 is 5 years back, element 1 is 4 years back and so on with element 5 being last financial year total |
+| `lastFiveYearsTotals` | List`<float>` | A 5-element list where each element is a value for gifts made in the past 5 years. Element 0 is 5 years back, element 1 is 4 years back and so on with element 5 being last financial year total. We do not save these values with the constituent, we do store gift history if you are using that functionality, but this data element is used to calculate donor status if you are not providing it on your own. If this list does not contain five elements, we ignore this field |
 | `hasDirectoryAccess` | boolean | Control whether or not this person has access to the Directory feature within the QuadWrangle platform |
 | `publicProfile` | boolean | Set if this person will have a public profile or not |
 | `doNotContact` | boolean | Set the "do not contact" flag for this person. This means we will not email, SMS, or send any communications other than system-triggered emails |
 | `doNotEmail` | boolean | Do not send this person any emails |
 | `suppressGiving` | boolean | If set to true, we will not deliver any automated CTA for giving opportunities |
+| `giftHistoryTotal` | float | A total gift amount for this constituent.  |
+| `lastGiftDate` | String (date) | The last gift date for this constituent. This date should follow this format: `M/d/yyyy` or: `M-d-yyyy` |
+| `totalNumberOfGifts` | Number | The total number of gifts made for this constituent |
+| `engagementScore` | Float | The engagement score you have set for this constituent. |
+| `relationshipStatus` | String | Set the relationship status for this constituent. Valid values are: `SINGLE`, `MARRIED`, `IN` (in a relationship), `ENGAGED`, `CIVIL`, `PARTNERSHIP`, `OPEN`,`COMPLICATED`, `SEPERATED`, `DIVORCED`, `WIDOWED`, `WIDOWER` | 
 | `isModerator` | boolean | Set if this person is a moderator. Moderators have access to certain features within the platform, like moderating event photos |
 | `fbPageIds` | List (of strings) | If you have a Facebook App that has the `user_likes` permission, and your system records pages liked by this person, you can pass in a list of Facebook Page IDs, and we will use that information to build the natural language profile for this person. |
 | `fbAccessToken` | String | If you have a Facebook App configured, and the access token your app retrieves for this user can be passed in and we can use the profile information (per the permissions of the Facebook App) to build the natural language profile for this person. |
 | `liAccessToken` | String | If you have a configured LinkedIn App and you record the access token your app retrieves, you can pass in this access token and our system can fetch the LinkedIn profile of this person to build the natural language profile | 
 | `linkedinBio` | String | If you have a LinkedIn App configured, and you retrieve the LinkedIn biography for this person, you can pass that in to build the natural language profile for this person. |
 | `biography` | String | If you have unstructured, descriptive, biographical information for this person, it may be used to help build the natural language profile for this person. |
+| `customFields` | Key/Value Pairs | You may use this field to store any extra fields for this constituent. This field uses a key/value pair data structure where the "key" is the name of the field and the "value" can either be a simple string, number, or a list or other object. Using any valid JSON object is valid. We will be implementing different features and views into custom fields in the future | 
+| `giftOfficer` | Object | See below for full details -- this is the gift officer assigned to this constituent. If this object is provided, we will add or update the appropriate QuadHub user (these QuadHub users are a specific type of user, that of a "GO" (gift officer) and do not typically log into QuadHub, but this is used to build lists for a set of constituents |
+| `callReports` | List (of objects) | A list of call report notes for this constituent. See below for details on what you can include in each instance of this list. If this is left blank the system will clear out this constituent's call reports field |
 
 Only those fields marked as _REQUIRED_ are required and all other fields are optional. 
+
+**Note about custom fields**: Here are some examples of how you can use custom fields and the formatting you may use:
+
+```json
+"customFields" : {
+	"simple_field" : "a simple string value",
+	"list_field" : ["list item1", "list item 2"],
+	"complex_field" : {
+		"nested_field_1" : true,
+		"nested_field_2" : 1,
+		"nested_field_3" : "some string value"
+	}
+}
+```
+
+Each "key" represents a field in the custom fields object. 
+
+## Gift Officer
+
+This model represents a "gift officer" that may be assigned to a particular constituent. You need only provide an email address, or the QuadWrangle assigned ID for this QuadHub user. Everything else in this model is optional. Obviously a gift officer will be responsible for many constituents, the system will take care not to create duplicate gift officer users in QuadHub (using either the `id` field or `email`). 
+
+This model is a nested model on the `Person` model (see above)
+
+```json
+{
+	"id" : "<string>",
+	"firstName" : "<string>",
+	"lastName" : "<string>",
+	"email" : "<string>",
+	"phone" : "<string>",
+	"department" : "<string>",
+	"jobTitle" : "<string>",
+	"lastLogin" : <timestamp>,
+	"isActive" : <boolean>,
+	"types" : [ "GO" ]
+}
+```
+
+| Field | Type | Description |
+|--------|-------|-----|
+| `id` | String | Read only. QuadWrangle system ID |
+| `firstName` | String | First name for this Gift Officer |
+| `lastName` | String | Last name for this Gift Officer |
+| `email` | String | Email address |
+| `phone` | String | Phone number |
+| `department` | String | Department this person is a member of |
+| `jobTitle` | String | Job title for this person |
+| `lastLogin` | Timestamp | Read only. If we have this we will provide the last login date/time for this person |
+| `isActive` | boolean | Read only, If this person is an active user of QuadHub we will indicate it here |
+| `types` | List | Read only, Every QuadHub user falls into a "type" of user, Gift Officers, have a specific type which we will provide for completeness |
+
+While it is normally the case that Gift Officers don't use QuadHub, they can be set to active and provided with login credentials using the Admin Tools > User Management in QuadHub. 
+
+## Call Report
+
+The Call Report model represents a note for this constituent. There may be multiple entries of this object type on the person record. Call reports are used by Isaac to build this constituent's story.
+
+```json
+{
+	"id" : "<string>",
+	"sourceId" : "<string>",
+	"timestamp" : <long>,
+	"content" : "<string>"
+}
+```
+
+| Field | Type | Description |
+|-------|--------|--------|
+| `id` | String | This is the QuadWrangle system ID for this note entry |
+| `sourceId` | String | This is your ID for this note. This is optional |
+| `timestamp` | Long (timestamp in milliseconds) | This is your original created date for this note entry, which must be expressed as a epoch timestamp (in milliseconds) |
+| `content` | String | The content of this note |
+
 
 ## Affiliations
 
@@ -1363,6 +1618,8 @@ Below is a list of built-in affiliations:
  - `RETIRED_FACULTY`
  
  - `RETIRED_STAFF`
+ 
+ - `DECEASED`
   
 When using the built-in affiliations, it is critical to use the exact spelling and use all upper-case (as the above example shows).
 
@@ -1378,7 +1635,6 @@ A Change Set represents a single change to a field on the person data. The model
 {
 	"id" : "<string>",
 	"fieldName" : "<string>",
-	"person" : "<person object>",
 	"newValue" : "<string>",
 	"oldValue" : "<string>",
 	"created" : <long>,
@@ -1391,7 +1647,6 @@ A Change Set represents a single change to a field on the person data. The model
 |---------------|----------------|
 | `id` | The system ID for this change set. You'll need this if you choose to programmatically accept change sets |  
 | `fieldName`    |   what field does this Change Set represent? Can be: FIRSTNAME, LASTNAME, MAIDENNAME, EMAIL, ADDRESS, ADDRESS2, CITY, STATE, COUNTRY, ZIPCODE, EMPLOYER, TITLE   |
-| `person` | A person object of the person who owns this change set | 
 | `newValue`    |   The current value for this field   |
 | `oldValue` | The original value for this field |
 | `created` | Timestamp when this change set was created |
@@ -1462,7 +1717,7 @@ The Academics model is used on the `Person` object used to define majors/degrees
 {
 	"year" : <int>,
 	"degree" : "<string>",
-	"major" : "<string>"
+	"major" : [ "<string>", "<string>" ]
 }
 ```
 
@@ -1470,7 +1725,7 @@ The Academics model is used on the `Person` object used to define majors/degrees
 |-------|-------|----------|
 | `year` | integer | `yyyy` (example: 1996) |
 | `degree` | String | Name of this degree. This will be looked up in the degrees collection and if not found there a new one will be added. example: Bachelors of Science |
-| `major` | String | Name of the major. This will be looked up in the majors collection and if not found there a new one will be added. example: Computer Science |
+| `major` | List | One or many majors as a list of strings. This will be looked up in the majors collection and if not found there a new one will be added. example: Computer Science |
 
 ## Checkin
 
@@ -1664,6 +1919,7 @@ Several fields are specific to the type of payment processor API being used, so 
 	"id" : "<string>",
 	"person" : <person object>,
 	"amount" : <double>,
+	"transactionId" : <string>,
 	"timestamp" : <long>,
 	"recurring" : <boolean>,
 	"processed" : <boolean>,
@@ -1722,6 +1978,11 @@ Several fields are specific to the type of payment processor API being used, so 
 | `customerId` | String | Some payment processors will create unique customer IDs for a transaction to help you identify/reconcile transactions from one system to the next. |
 | `subscriptionId` | String | Some payment processors will create a subscription ID for recurring payments. In these systems recurring payments are considered subscriptions and a unique ID may be assigned. This depends on the payment processor gateway being used |
 | `details` | Hash Map | There will be a  key in this hash map that holds the entity where this transaction originated from. Currently the are two keys: `page` and `event` and each will reference the corresponding models |
+
+## Ticket
+Ticket model
+
+A ticket represents either a ticket purchased by a user, if the context of the request is fetching transactions, or the model of the ticket for the event. The difference between 
 
 ## Post
 
