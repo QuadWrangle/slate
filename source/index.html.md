@@ -389,6 +389,7 @@ This endpoint expects JSON in the body of the request.
 	"email" : "<string>",
 	"recordId" : "<string>",
 	"name" : "<string>",
+	"phone" : "<string>",
 	"affiliation" : "<string>",
 	"affinity" : "<string>",
 	"isActive" : <boolean>,
@@ -411,6 +412,7 @@ Search filter parameters:
 | `email` | String | Email to search by |
 | `recordId` | String | Use the original ID from the database of record |
 | `name` | String | Name search. If this value is a single value, then this will be a  last name search, if this value contains spaces, then this will be a first and last name search |
+| `phone` | String | Search by a phone number | 
 | `affiliation` | String | Search by one of the built in affiliations (ALUM, FACULTY etc.), You may specify a list using a comma separated list: ALUM,FACULTY,... |
 | `affinity` | String | Search by one of your custom affinities |
 | `isActive` | Boolean | Set to `true` to only return results of active users. `false` will return only those who are not active. Null value means this field is ignored | 
